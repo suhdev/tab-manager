@@ -219,7 +219,8 @@ describe('tab-manager', () => {
     it('should call custom tab title renderer', () => {
       const renderTab = jest.fn((tab, setActiveTab, activeTab) => {
         return <div key={tab.id} data-enable={activeTab === tab}
-          data-testid={`tab__${tab.id}`}>CUSTOM {tab.label}</div>;
+          data-testid={`tab__${tab.id}`} onClick={() => setActiveTab(tab)}>CUSTOM {tab.label}</div>;
+
       });
       const { getByTestId } = render(
         <TabManager>
@@ -260,9 +261,13 @@ describe('tab-manager', () => {
 
       expect(getByTestId('tabbar-container').children.item(0).textContent).toEqual('CUSTOM Tab 1');
       expect(getByTestId('tabbar-container').children
-        .item(0).getAttribute('data-active')).toEqual('true');
+        .item(0).getAttribute('data-enable')).toEqual('true');
       expect(getByTestId('tabbar-container').children.item(1).textContent).toEqual('CUSTOM Tab 2');
-      expect(getByTestId('tabbar-container').children.item(2).textContent).toEqual('CUSOMT Tab 3');
+      expect(getByTestId('tabbar-container').children
+        .item(1).getAttribute('data-enable')).toEqual('false');
+      expect(getByTestId('tabbar-container').children.item(2).textContent).toEqual('CUSTOM Tab 3');
+      expect(getByTestId('tabbar-container').children
+        .item(2).getAttribute('data-enable')).toEqual('false');
 
       act(() => {
         fireEvent.change(getByTestId('tab-selector'), {
@@ -272,25 +277,29 @@ describe('tab-manager', () => {
         });
       });
 
-      expect(getByTestId('tabbar-container').children.item(0).textContent).toEqual('Tab 1');
+      expect(getByTestId('tabbar-container').children.item(0).textContent).toEqual('CUSTOM Tab 1');
       expect(getByTestId('tabbar-container').children
-        .item(0).getAttribute('data-active')).toEqual('false');
-      expect(getByTestId('tabbar-container').children.item(1).textContent).toEqual('Tab 2');
-      expect(getByTestId('tabbar-container').children.item(2).textContent).toEqual('Tab 3');
+        .item(0).getAttribute('data-enable')).toEqual('false');
+      expect(getByTestId('tabbar-container').children.item(1).textContent).toEqual('CUSTOM Tab 2');
       expect(getByTestId('tabbar-container').children
-        .item(2).getAttribute('data-active')).toEqual('true');
+        .item(1).getAttribute('data-enable')).toEqual('false');
+      expect(getByTestId('tabbar-container').children.item(2).textContent).toEqual('CUSTOM Tab 3');
+      expect(getByTestId('tabbar-container').children
+        .item(2).getAttribute('data-enable')).toEqual('true');
 
       act(() => {
-        fireEvent.click(getByTestId('tabbar__tab-1'));
+        fireEvent.click(getByTestId('tab__tab-1'));
       });
 
-      expect(getByTestId('tabbar-container').children.item(0).textContent).toEqual('Tab 1');
+      expect(getByTestId('tabbar-container').children.item(0).textContent).toEqual('CUSTOM Tab 1');
       expect(getByTestId('tabbar-container').children
-        .item(0).getAttribute('data-active')).toEqual('true');
-      expect(getByTestId('tabbar-container').children.item(1).textContent).toEqual('Tab 2');
-      expect(getByTestId('tabbar-container').children.item(2).textContent).toEqual('Tab 3');
+        .item(0).getAttribute('data-enable')).toEqual('true');
+      expect(getByTestId('tabbar-container').children.item(1).textContent).toEqual('CUSTOM Tab 2');
       expect(getByTestId('tabbar-container').children
-        .item(2).getAttribute('data-active')).toEqual('false');
+        .item(1).getAttribute('data-enable')).toEqual('false');
+      expect(getByTestId('tabbar-container').children.item(2).textContent).toEqual('CUSTOM Tab 3');
+      expect(getByTestId('tabbar-container').children
+        .item(2).getAttribute('data-enable')).toEqual('false');
     });
 
   });
