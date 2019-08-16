@@ -7,17 +7,20 @@
     "jsx": "react",
     "outDir": "./lib",
     "declaration": true,
-    "plugins": [{
-      "name": "tslint-language-service",
-      "alwaysShowRuleFailuresAsWarnings": false,
-      "ignoreDefinitionFiles": true,
-      "configFile": "./tslint.json",
-      "disableNoUnusedVariableRule": false
-    }]
+    "plugins": [
+      {
+        "name": "tslint-language-service",
+        "alwaysShowRuleFailuresAsWarnings": false,
+        "ignoreDefinitionFiles": true,
+        "configFile": "./tslint.json",
+        "disableNoUnusedVariableRule": false
+      }
+    ]
   },
   "exclude": [
     "node_modules",
     "lib",
+    "src/examples/**/*.tsx",
     "src/**/*.test.tsx"
   ]
 }

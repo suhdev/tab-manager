@@ -1,11 +1,3 @@
-# stickyants-tab-manager 
-
-A barebone declarative implementation of a tab-manager. 
-
-## Usage
-
-
-```typescript
 import * as React from 'react';
 import * as ReactDOM from 'react-dom';
 import { TabManager, Tab, ActiveTab } from '../index';
@@ -58,6 +50,3 @@ function MyTabbedApp() {
   );
 
 }());
-
-
-```
